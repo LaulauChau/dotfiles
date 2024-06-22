@@ -20,6 +20,9 @@ return {
   	opts = {
   		ensure_installed = {
         "biome",
+        "json-lsp",
+        "lua-language-server",
+        "prisma-language-server",
         "rustywind",
   		  "tailwindcss-language-server",
         "typescript-language-server"
@@ -33,10 +36,15 @@ return {
       local opts = require "nvchad.configs.treesitter"
   		opts.ensure_installed = {
   		  "css",
+        "json",
         "lua",
+        "prisma",
         "javascript",
         "typescript",
-        "tsx"
+        "tsx",
+        "vim",
+        "vimdoc",
+        "html",
       }
       return opts
     end,
@@ -85,4 +93,9 @@ return {
       })
     end
   }
+},
+
+{
+  "b0o/schemastore.nvim",
+  lazy = true,
 }
