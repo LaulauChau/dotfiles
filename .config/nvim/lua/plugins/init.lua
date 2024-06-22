@@ -1,0 +1,88 @@
+return {
+  -- {
+  --   "stevearc/conform.nvim",
+  --   event = 'BufWritePre', -- uncomment for format on save
+  --   config = function()
+  --     require "configs.conform"
+  --   end,
+  -- },
+
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("nvchad.configs.lspconfig").defaults()
+      require "configs.lspconfig"
+    end,
+  },
+
+  {
+  	"williamboman/mason.nvim",
+  	opts = {
+  		ensure_installed = {
+        "biome",
+        "rustywind",
+  		  "tailwindcss-language-server",
+        "typescript-language-server"
+      },
+  	},
+  },
+
+  {
+  	"nvim-treesitter/nvim-treesitter",
+  	opts = function()
+      local opts = require "nvchad.configs.treesitter"
+  		opts.ensure_installed = {
+  		  "css",
+        "lua",
+        "javascript",
+        "typescript",
+        "tsx"
+      }
+      return opts
+    end,
+  },
+
+  {
+    "nvimtools/none-ls.nvim",
+    event = "VeryLazy",
+    opts = function()
+      return require "configs.null-ls"
+    end,
+  },
+
+  {
+    "windwp/nvim-ts-autotag",
+    ft = {"javascript", "javascriptreact", "typescript", "typescriptreact"},
+    config = function ()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  },
+
+  {
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    config = function ()
+      require("tailwindcss-colorizer-cmp").setup({
+        color_square_width = 2,
+      })
+    end
+  }
+}
