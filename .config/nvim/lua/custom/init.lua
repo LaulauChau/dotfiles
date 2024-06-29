@@ -1,7 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("BufWritePre", {
-  pattern = "*.prisma",
+  pattern = "*",
   callback = function()
     vim.lsp.buf.format({ async = false })
   end,

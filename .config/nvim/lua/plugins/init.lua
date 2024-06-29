@@ -16,26 +16,26 @@ return {
   },
 
   {
-  	"williamboman/mason.nvim",
-  	opts = {
-  		ensure_installed = {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
         "biome",
         "json-lsp",
         "lua-language-server",
         "prisma-language-server",
         "rustywind",
-  		  "tailwindcss-language-server",
+        "tailwindcss-language-server",
         "typescript-language-server"
       },
-  	},
+    },
   },
 
   {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = function()
+    "nvim-treesitter/nvim-treesitter",
+    opts = function()
       local opts = require "nvchad.configs.treesitter"
-  		opts.ensure_installed = {
-  		  "css",
+      opts.ensure_installed = {
+        "css",
         "json",
         "lua",
         "prisma",
@@ -44,7 +44,6 @@ return {
         "tsx",
         "vim",
         "vimdoc",
-        "html",
       }
       return opts
     end,
@@ -60,8 +59,8 @@ return {
 
   {
     "windwp/nvim-ts-autotag",
-    ft = {"javascript", "javascriptreact", "typescript", "typescriptreact"},
-    config = function ()
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    config = function()
       require("nvim-ts-autotag").setup()
     end,
   },
@@ -77,25 +76,26 @@ return {
       "TmuxNavigatePrevious",
     },
     keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
 
   {
     "roobert/tailwindcss-colorizer-cmp.nvim",
-    config = function ()
+    config = function()
       require("tailwindcss-colorizer-cmp").setup({
         color_square_width = 2,
       })
     end
-  }
-},
+  },
 
-{
-  "b0o/schemastore.nvim",
-  lazy = true,
+
+  {
+    "b0o/schemastore.nvim",
+    lazy = true,
+  },
 }
