@@ -1,5 +1,6 @@
 return {
   ensure_installed = {
+    "biome",
     "gofumpt",
     "goimports",
     "golines",
