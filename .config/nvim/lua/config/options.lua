@@ -27,18 +27,53 @@ vim.o.mouse = "a"
 --  See `:help 'clipboard'`
 vim.o.clipboard = "unnamedplus"
 
-vim.g.clipboard = {
-  name = "WslClipboard",
-  copy = {
-    ["+"] = "clip.exe",
-    ["*"] = "clip.exe",
-  },
-  paste = {
-    ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  },
-  cache_enabled = 0,
-}
+-- Detect the OS and set the clipboard accordingly
+local system = vim.loop.os_uname().sysname
+
+if system == "Darwin" then
+  vim.g.clipboard = {
+    name = "MacOSX",
+    copy = {
+      ["+"] = "pbcopy",
+      ["*"] = "pbcopy",
+    },
+    paste = {
+      ["+"] = "pbpaste",
+      ["*"] = "pbpaste",
+    },
+    cache_enabled = 0,
+  }
+elseif system == "Linux" then
+  local is_wsl = vim.fn.system("uname -r | grep -i microsoft") ~= ""
+
+  if is_wsl then
+    vim.g.clipboard = {
+      name = "WslClipboard",
+      copy = {
+        ["+"] = "clip.exe",
+        ["*"] = "clip.exe",
+      },
+      paste = {
+        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      },
+      cache_enabled = 0,
+    }
+  else
+    vim.g.clipboard = {
+      name = "LinuxClipboard",
+      copy = {
+        ["+"] = "xclip -selection clipboard",
+        ["*"] = "xclip -selection clipboard",
+      },
+      paste = {
+        ["+"] = "xclip -selection clipboard -o",
+        ["*"] = "xclip -selection clipboard -o",
+      },
+      cache_enabled = 0,
+    }
+  end
+end
 
 -- Enable break indent
 vim.o.breakindent = true
