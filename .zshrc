@@ -73,7 +73,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # pnpm
-export PNPM_HOME="/home/lachau/.local/share/pnpm"
+export PNPM_HOME="/Users/lachau/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -81,8 +81,10 @@ esac
 # pnpm end
 
 # bun completions
-[ -s "/home/lachau/.bun/_bun" ] && source "/home/lachau/.bun/_bun"
+[ -s "/Users/lachau/.bun/_bun" ] && source "/Users/lachau/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH=$PATH:/usr/local/go/bin
