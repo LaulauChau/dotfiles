@@ -1,11 +1,21 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
--- Add any additional autocmds here
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
-  pattern = { "*.templ" },
+local yank_group = augroup("HighlighYank", {})
+
+autocmd("TextYankPost", {
+  group = yank_group,
+  pattern = "*",
   callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_buf_set_option(buf, "filetype", "templ")
+    vim.highlight.on_yank({
+      higroup = "IncSearch",
+      timeout = 40,
+    })
   end,
+})
+
+autocmd({ "BufWritePre" }, {
+    group = augroup("lachau", {}),
+    pattern = "*",
+    command = [[%s/\s\+$//e]],
 })

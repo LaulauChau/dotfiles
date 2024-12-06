@@ -1,27 +1,13 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+-- Keep things highlighted after moving with < and >
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
 
--- Go to definition
-vim.api.nvim_set_keymap(
-  "n",
-  "gd",
-  "<cmd>lua vim.lsp.buf.definition()<CR>",
-  { desc = "Go to definition", noremap = true, silent = true }
-)
+-- Move stuff up and down in visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
--- Show references
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>gr",
-  "<cmd>Telescope lsp_references<CR>",
-  { desc = "Show references", noremap = true, silent = true }
-)
-
--- Show hover
-vim.api.nvim_set_keymap(
-  "n",
-  "K",
-  "<cmd>lua vim.lsp.buf.hover()<CR>",
-  { desc = "Show hover", noremap = true, silent = true }
-)
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
