@@ -23,7 +23,7 @@ require("lazy").setup({
   defaults = {
     lazy = false,
   },
-  install = { colorscheme = { "rose-pine" } },
+  install = { colorscheme = { "catppuccin" } },
   checker = { enabled = true },
   performance = {
     rtp = {
