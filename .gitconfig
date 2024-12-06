@@ -3,3 +3,5 @@
 [user]
 	email = mplaurent.chau@gmail.com
 	name = Laurent Chau
+[core]
+	editor = nvim
