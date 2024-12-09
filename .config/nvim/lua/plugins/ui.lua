@@ -49,5 +49,15 @@ return {
         map('n', '<leader>td', gs.toggle_deleted)
       end
     }
-  }
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        theme = "catppuccin",
+      },
+    },
+  },
 }

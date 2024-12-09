@@ -1,42 +1,57 @@
-local opt = vim.opt
+-- Set <space> as the leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- Line numbers
-opt.number = true
-opt.relativenumber = true
+vim.g.have_nerd_font = true
 
--- Indentation
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.expandtab = true
-opt.autoindent = true
-opt.smartindent = true
+-- Make line numbers default
+vim.opt.number = true
+vim.opt.relativenumber = true
 
--- Line wrapping
-opt.wrap = false
+-- Enable mouse mode, can be useful for resizing splits for example
+vim.opt.mouse = "a"
 
--- Search
-opt.ignorecase = true
-opt.smartcase = true
-opt.hlsearch = false
-opt.incsearch = true
+-- Sync clipboard between OS and Neovim
+-- Schedule the setting after 'UiEnter' because it can increase startup time
+vim.schedule(function()
+  vim.opt.clipboard = "unnamedplus"
+end)
 
--- Appearance
-opt.termguicolors = true
-opt.signcolumn = "yes"
-opt.cmdheight = 1
-opt.scrolloff = 10
-opt.completeopt = "menuone,noselect"
+-- Enable break indent
+vim.opt.breakindent = true
 
--- Behavior
-opt.hidden = true
-opt.errorbells = false
-opt.swapfile = false
-opt.backup = false
-opt.undofile = true
-opt.undodir = vim.fn.stdpath("data") .. "/undodir"
-opt.backspace = "indent,eol,start"
-opt.splitright = true
-opt.splitbelow = true
-opt.autochdir = false
-opt.mouse = "a"
-opt.clipboard = "unnamedplus"
+-- Save undo history
+vim.opt.undofile = true
+
+-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Keep signcolumn on by default
+vim.opt.signcolumn = 'yes'
+
+-- Decrease update time
+vim.opt.updatetime = 250
+
+-- Decrease mapped sequence wait time
+-- Displays which-key popup sooner
+vim.opt.timeoutlen = 300
+
+-- Keep signcolumn on by default
+vim.opt.signcolumn = 'yes'
+
+-- Decrease update time
+vim.opt.updatetime = 250
+
+-- Decrease mapped sequence wait time
+-- Displays which-key popup sooner
+vim.opt.timeoutlen = 300
+
+-- Set indent to two spaces
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+
+vim.opt.termguicolors = true

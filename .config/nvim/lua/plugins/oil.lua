@@ -6,13 +6,14 @@ return {
       { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
     },
     opts = {
-      columns = { "icon" },
-      keymaps = {
-        ["<C-h>"] = false,
-        ["<M-h>"] = "actions.select_split",
-      },
+      default_file_explorer = true,
+      skip_confirm_for_simple_edits = true,
       view_options = {
+        natural_order = true,
         show_hidden = true,
+      },
+      win_options = {
+        wrap = true,
       },
     },
   },
