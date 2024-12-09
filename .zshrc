@@ -38,6 +38,7 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
+bindkey -s ^f "tmux-sessionizer\n"
 
 # History
 HISTSIZE=5000
@@ -86,3 +87,5 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$PATH":"$HOME/.local/scripts/"
