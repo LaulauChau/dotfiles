@@ -9,6 +9,7 @@ return {
           ["<C-space>"] = cmp.mapping.complete(),
           ["<C-u>"] = cmp.mapping.scroll_docs(-4),
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
         }),
         snippet = {
           expand = function(args)

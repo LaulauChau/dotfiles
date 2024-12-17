@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    opts =  {
+    opts = {
       format_on_save = {
         lsp_fallback = true,
         timeout_ms = 500,
@@ -15,7 +15,7 @@ return {
         json = { { "biome", "prettierd", "prettier" } },
         html = { { "prettierd", "prettier" } },
         css = { { "biome", "prettierd", "prettier" } },
-        go = { "gofmt", "goimports" },
+        go = { "gofumpt", "goimports" },
         terraform = { "terraform_fmt" },
       },
     },

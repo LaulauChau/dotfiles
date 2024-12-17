@@ -1,8 +1,26 @@
 return {
   {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+    opts = {
+      ensure_installed = {
+        "biome",
+        "black",
+        "gofumpt",
+        "goimports",
+        "isort",
+        "prettierd",
+        "stylua",
+      }
+    },
+  },
+
+  {
     "williamboman/mason.nvim",
+    config = true,
     lazy = false,
-    opts = {},
   },
 
   {
@@ -27,9 +45,8 @@ return {
         "yamlls",
 
         -- General
-        "biome",
         "jsonls",
-        "marksman"
+        "marksman",
       },
       handlers = {
         function(server_name)
@@ -106,8 +123,8 @@ return {
           vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
           vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
           vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-          vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+          vim.keymap.set('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+          vim.keymap.set('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
         end,
       })
     end,
