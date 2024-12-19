@@ -1,153 +1,146 @@
 return {
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-    },
-    opts = {
-      ensure_installed = {
-        "biome",
-        "black",
-        "gofumpt",
-        "goimports",
-        "isort",
-        "prettierd",
-        "stylua",
-      }
-    },
-  },
+	{
+		"williamboman/mason.nvim",
+		config = true,
+		lazy = false,
+	},
 
-  {
-    "williamboman/mason.nvim",
-    config = true,
-    lazy = false,
-  },
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = {
+			"williamboman/mason.nvim",
+		},
+		opts = {
+			ensure_installed = {
+				"biome",
+				"black",
+				"gofumpt",
+				"goimports",
+				"isort",
+				"prettierd",
+				"stylua",
+			},
+		},
+	},
 
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        -- Frontend
-        "cssls",
-        "html",
-        "tailwindcss",
-        "templ",
-        "ts_ls",
+	{
+		"neovim/nvim-lspconfig",
+		cmd = { "LspInfo", "LspInstall", "LspStart" },
+		config = function()
+			local lsp_defaults = require("lspconfig").util.default_config
 
-        -- Backend
-        "gopls",
-        "pyright",
+			-- Add cmp_nvim_lsp capabilities settings to lspconfig
+			-- This should be executed before you configure any language server
+			lsp_defaults.capabilities =
+				vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("blink.cmp").get_lsp_capabilities())
 
-        -- Infrastructure
-        "dockerls",
-        "lua_ls",
-        "terraformls",
-        "yamlls",
+			-- LspAttach is where you enable features that only work
+			-- if there is a language server active in the file
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(event)
+					local opts = { buffer = event.buf }
 
-        -- General
-        "jsonls",
-        "marksman",
-      },
-      handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-          })
-        end,
+					vim.keymap.set("n", "K", "<CMD>lua vim.lsp.buf.hover()<CR>", opts)
+					vim.keymap.set("n", "gd", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
+					vim.keymap.set("n", "gD", "<CMD>lua vim.lsp.buf.declaration()<CR>", opts)
+					vim.keymap.set("n", "gi", "<CMD>lua vim.lsp.buf.implementation()<CR>", opts)
+					vim.keymap.set("n", "go", "<CMD>lua vim.lsp.buf.type_definition()<CR>", opts)
+					vim.keymap.set("n", "gr", "<CMD>lua vim.lsp.buf.references()<CR>", opts)
+					vim.keymap.set("n", "gs", "<CMD>lua vim.lsp.buf.signature_help()<CR>", opts)
+					vim.keymap.set("n", "cr", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
+					vim.keymap.set("n", "ca", "<CMD>lua vim.lsp.buf.code_action()<CR>", opts)
+				end,
+				desc = "LSP actions",
+			})
 
-        ["jsonls"] = function()
-          require("lspconfig").jsonls.setup({
-            settings = {
-              json = {
-                schemas = require("schemastore").json.schemas(),
-                validate = { enable = true },
-              },
-            },
-          })
-        end,
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					-- Frontend
+					"cssls",
+					"html",
+					"tailwindcss",
+					"templ",
+					"ts_ls",
 
-        ["ts_ls"] = function()
-          require("lspconfig").ts_ls.setup({
-            settings = {
-              typescript = {
-                inlayHints = {
-                  includeInlayParameterNameHints = "all",
-                  includeInlayPropertyDeclarationTypeHints = true,
-                },
-              },
-            },
-          })
-        end,
+					-- Backend
+					"gopls",
+					"pyright",
 
-        ["yamlls"] = function()
-          require("lspconfig").yamlls.setup({
-            settings = {
-              yaml = {
-                schemaStore = {
-                  enable = true,
-                  url = "https://www.schemastore.org/api/json/catalog.json",
-                },
-                schemas = require("schemastore").yaml.schemas(),
-              },
-            },
-          })
-        end,
-      },
-    },
-  },
+					-- Infrastructure
+					"dockerls",
+					"lua_ls",
+					"terraformls",
+					"yamlls",
 
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local lsp_defaults = require("lspconfig").util.default_config
+					-- General
+					"jsonls",
+					"marksman",
+				},
+				handlers = {
+					-- this first function is the "default handler"
+					-- it applies to every language server without a "custom handler"
+					function(server_name)
+						require("lspconfig")[server_name].setup({})
+					end,
 
-      -- Add cmp_nvim_lsp capabilities settings to lspconfig
-      -- This should be executed before you configure any language server
-      lsp_defaults.capabilities = vim.tbl_deep_extend(
-        'force',
-        lsp_defaults.capabilities,
-        require('cmp_nvim_lsp').default_capabilities()
-      )
+					["jsonls"] = function()
+						require("lspconfig").jsonls.setup({
+							settings = {
+								json = {
+									schemas = require("schemastore").json.schemas(),
+									validate = { enable = true },
+								},
+							},
+						})
+					end,
 
-      -- LspAttach is where you enable features that only work
-      -- if there is a language server active in the file
-      vim.api.nvim_create_autocmd('LspAttach', {
-        desc = 'LSP actions',
-        callback = function(event)
-          local opts = { buffer = event.buf }
+					["ts_ls"] = function()
+						require("lspconfig").ts_ls.setup({
+							settings = {
+								typescript = {
+									inlayHints = {
+										includeInlayParameterNameHints = "all",
+										includeInlayPropertyDeclarationTypeHints = true,
+									},
+								},
+							},
+						})
+					end,
 
-          vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-          vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-          vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-          vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-          vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-          vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-          vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-          vim.keymap.set('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          vim.keymap.set('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-        end,
-      })
-    end,
-    cmd = { "LspInfo", "LspInstall", "LspStart" },
-    dependencies = {
-      {
-        "folke/lazydev.nvim",
-        ft = { "lua" },
-        opts = {
-          library = {
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-          },
-        },
-      },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
-    },
-    event = { "BufNewFile", "BufReadPre" },
-  },
+					["yamlls"] = function()
+						require("lspconfig").yamlls.setup({
+							settings = {
+								yaml = {
+									schemaStore = {
+										enable = true,
+										url = "https://www.schemastore.org/api/json/catalog.json",
+									},
+									schemas = require("schemastore").yaml.schemas(),
+								},
+							},
+						})
+					end,
+				},
+			})
+		end,
+		dependencies = {
+			{
+				"folke/lazydev.nvim",
+				opts = {
+					library = {
+						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+					},
+				},
+			},
+			"saghen/blink.cmp",
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+		event = { "BufReadPre", "BufNewFile" },
+	},
 
-  {
-    "b0o/schemaStore.nvim",
-    version = false,
-  },
+	{
+		"b0o/schemaStore.nvim",
+		version = false,
+	},
 }

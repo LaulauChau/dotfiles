@@ -1,23 +1,35 @@
 return {
-  {
-    "stevearc/conform.nvim",
-    opts = {
-      format_on_save = {
-        lsp_fallback = true,
-        timeout_ms = 500,
-      },
-      formatters_by_ft = {
-        lua = { "stylua" },
-        python = { "black", "isort" },
-        javascript = { { "biome", "prettierd", "prettier" } },
-        typescript = { { "biome", "prettierd", "prettier" } },
-        yaml = { { "prettierd", "prettier" } },
-        json = { { "biome", "prettierd", "prettier" } },
-        html = { { "prettierd", "prettier" } },
-        css = { { "biome", "prettierd", "prettier" } },
-        go = { "gofumpt", "goimports" },
-        terraform = { "terraform_fmt" },
-      },
-    },
-  },
+	{
+		"stevearc/conform.nvim",
+		cmd = { "ConformInfo" },
+		event = { "BufWritePre" },
+		keys = {
+			{
+				"<leader>f",
+				function()
+					require("conform").format({ async = true, lsp_format = "fallback" })
+				end,
+				mode = "",
+				desc = "[F]ormat buffer",
+			},
+		},
+		opts = {
+			format_on_save = {
+				lsp_fallback = true,
+				timeout_ms = 500,
+			},
+			formatters_by_ft = {
+				css = { { "biome", "prettierd", "prettier" } },
+				go = { "gofumpt", "goimports" },
+				html = { { "prettierd", "prettier" } },
+				javascript = { { "biome", "prettierd", "prettier" } },
+				json = { { "biome", "prettierd", "prettier" } },
+				lua = { "stylua" },
+				python = { "black", "isort" },
+				terraform = { "terraform_fmt" },
+				typescript = { { "biome", "prettierd", "prettier" } },
+				yaml = { { "prettierd", "prettier" } },
+			},
+		},
+	},
 }

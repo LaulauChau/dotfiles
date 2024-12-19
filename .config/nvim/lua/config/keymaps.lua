@@ -1,3 +1,7 @@
+-- Set <space> as the leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Keep things highlighted after moving with < and >
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
