@@ -6,13 +6,9 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
   let
     configuration = { pkgs, config, ... }: {
       nixpkgs.config.allowUnfree = true;
@@ -21,21 +17,19 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-          pkgs.air
 		      pkgs.alacritty
+          pkgs.bun
           pkgs.cargo
           pkgs.discord
+          pkgs.fnm
           pkgs.fzf
           pkgs.git
           pkgs.go
-          pkgs.home-manager
 		      pkgs.mkalias
 		      pkgs.neovim
           pkgs.oh-my-posh
-          pkgs.python3
           pkgs.ripgrep
           pkgs.tailwindcss
-          pkgs.templ
 		      pkgs.tmux
           pkgs.tree
           pkgs.stow
@@ -49,6 +43,7 @@
         casks = [
           "docker"
           "hiddenbar"
+          "karabiner-elements"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
@@ -101,7 +96,6 @@
       nixpkgs.hostPlatform = "aarch64-darwin";
 
       users.users.lachau.home = "/Users/lachau";
-      home-manager.backupFileExtension = "backup";
       nix.configureBuildUsers = true;
       nix.useDaemon = true;
     };
@@ -120,12 +114,6 @@
             enableRosetta = true;
             user = "lachau";
           };
-        }
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.lachau = import ./home.nix;
         }
       ];
     };
