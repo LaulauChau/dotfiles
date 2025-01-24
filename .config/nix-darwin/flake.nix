@@ -17,7 +17,6 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-		      pkgs.alacritty
           pkgs.bun
           pkgs.cargo
           pkgs.discord
@@ -28,6 +27,7 @@
 		      pkgs.mkalias
 		      pkgs.neovim
           pkgs.oh-my-posh
+          pkgs.python3
           pkgs.ripgrep
           pkgs.tailwindcss
 		      pkgs.tmux
@@ -35,15 +35,21 @@
           pkgs.stow
           pkgs.vscode
           pkgs.wget
+          pkgs.yazi
           pkgs.zoxide
         ];
 
       homebrew = {
         enable = true;
+        brews = [
+          "minikube"
+        ];
         casks = [
           "docker"
+          "ghostty"
           "hiddenbar"
           "karabiner-elements"
+          "librewolf"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
