@@ -70,4 +70,5 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd --shell zsh)"
 
+export EDITOR=nvim
 export PATH="$PATH":"$HOME/.local/scripts/"
