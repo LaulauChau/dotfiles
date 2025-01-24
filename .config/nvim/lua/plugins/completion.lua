@@ -103,7 +103,9 @@ return {
 				["."] = false,
 			},
 			copilot_node_command = "node", -- Node.js version must be > 18.x
-			server_opts_overrides = {},
+			server_opts_overrides = {
+				encoding = "utf-8",
+			},
 		},
 	},
 }

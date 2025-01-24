@@ -54,6 +54,8 @@ return {
 			})
 
 			require("mason-lspconfig").setup({
+				automatic_installation = true,
+
 				ensure_installed = {
 					-- Frontend
 					"cssls",
@@ -81,6 +83,20 @@ return {
 					-- it applies to every language server without a "custom handler"
 					function(server_name)
 						require("lspconfig")[server_name].setup({})
+					end,
+
+					["gopls"] = function()
+						require("lspconfig").gopls.setup({
+							settings = {
+								gopls = {
+									analyses = {
+										unusedparams = true,
+									},
+									gofumpt = true,
+									staticcheck = true,
+								},
+							},
+						})
 					end,
 
 					["jsonls"] = function()
