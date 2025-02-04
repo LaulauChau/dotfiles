@@ -71,4 +71,5 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd --shell zsh)"
 
 export EDITOR=nvim
+export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
 export PATH="$PATH":"$HOME/.local/scripts/"
