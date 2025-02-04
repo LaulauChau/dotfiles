@@ -17,9 +17,12 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
+          pkgs.air
+          pkgs.bat
           pkgs.bun
           pkgs.cargo
           pkgs.discord
+          pkgs.fd
           pkgs.fnm
           pkgs.fzf
           pkgs.git
@@ -30,6 +33,7 @@
           pkgs.python3
           pkgs.ripgrep
           pkgs.tailwindcss
+          pkgs.templ
 		      pkgs.tmux
           pkgs.tree
           pkgs.stow
@@ -45,6 +49,7 @@
           "minikube"
         ];
         casks = [
+          "chromium"
           "docker"
           "ghostty"
           "hiddenbar"
@@ -100,6 +105,11 @@
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+      # Debugging: Print the localSystem value
+      system.activationScripts.debug = ''
+        echo "localSystem: ${builtins.toJSON pkgs.stdenv.hostPlatform}"
+      '';
 
       users.users.lachau.home = "/Users/lachau";
       nix.configureBuildUsers = true;
