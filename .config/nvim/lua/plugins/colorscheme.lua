@@ -1,9 +1,13 @@
 return {
 	{
-		"rose-pine/neovim",
+		"catppuccin/nvim",
 		config = function()
-			vim.cmd("colorscheme rose-pine-moon")
+			vim.cmd("colorscheme catppuccin")
 		end,
-		name = "rose-pine",
+		name = "catppuccin",
+		priority = 1000,
+		opts = {
+			flavour = "mocha",
+		},
 	},
 }
