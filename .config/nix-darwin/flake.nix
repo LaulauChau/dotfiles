@@ -2,8 +2,8 @@
   description = "Zenful nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
@@ -19,7 +19,6 @@
         [
           pkgs.air
           pkgs.bat
-          pkgs.bun
           pkgs.cargo
           pkgs.discord
           pkgs.fd
@@ -27,14 +26,13 @@
           pkgs.fzf
           pkgs.git
           pkgs.go
-		      pkgs.mkalias
-		      pkgs.neovim
+          pkgs.mkalias
+          pkgs.neovim
           pkgs.oh-my-posh
           pkgs.python3
           pkgs.ripgrep
-          pkgs.tailwindcss
           pkgs.templ
-		      pkgs.tmux
+          pkgs.tmux
           pkgs.tree
           pkgs.stow
           pkgs.vscode
@@ -49,12 +47,13 @@
           "minikube"
         ];
         casks = [
+          "battery"
           "chromium"
           "docker"
           "ghostty"
           "hiddenbar"
-          "karabiner-elements"
           "librewolf"
+          "scroll-reverser"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
@@ -63,7 +62,7 @@
 
       fonts.packages =
         [
-		      pkgs.nerd-fonts.jetbrains-mono
+          (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
       system.activationScripts.applications.text = let
@@ -93,8 +92,7 @@
       nix.settings.experimental-features = "nix-command flakes";
 
       # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-	    programs.zsh.enable = true;
+      programs.zsh.enable = true;
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -106,11 +104,6 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
 
-      # Debugging: Print the localSystem value
-      system.activationScripts.debug = ''
-        echo "localSystem: ${builtins.toJSON pkgs.stdenv.hostPlatform}"
-      '';
-
       users.users.lachau.home = "/Users/lachau";
       nix.configureBuildUsers = true;
       nix.useDaemon = true;
@@ -118,8 +111,8 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#Laurents-MacBook-Pro
-    darwinConfigurations."Laurents-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+    # $ darwin-rebuild build --flake .#MacBook-Pro-de-Laurent
+    darwinConfigurations."MacBook-Pro-de-Laurent" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
         nix-homebrew.darwinModules.nix-homebrew
