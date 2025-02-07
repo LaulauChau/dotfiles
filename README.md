@@ -1,6 +1,6 @@
 # My dotfiles
 
-Dotfiles managed through nix-darwin and home-manager.
+Dotfiles managed through nix-darwin.
 
 ## Installation
 
@@ -9,28 +9,50 @@ Dotfiles managed through nix-darwin and home-manager.
 1. Install Nix package manager
 ```sh
 sh <(curl -L https://nixos.org/nix/install)
+
+# Create the nix-darwin configuration directory
+sudo mkdir -p /etc/nix-darwin
+
+# Change the owner of the directory to the current user
+sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
+
+cd /etc/nix-darwin
 ```
 
-2. Manually copy the content of the nix-darwin folder. You can't clone the repository yet as you should not have git installed at this point
+2. Initialize the nix-darwin configuration
 ```sh
-mkdir -p ~/.config/nix-darwin
+# Initialize the nix-darwin configuration
+# nix flake init -t nix-darwin/master # for the unstable version
+nix flake init -t nix-darwin/nix-darwin-24.11
 
-touch ~/.config/nix-darwin/flake.nix
+# Edit the hostname in flake.nix
+sed -i '' "s/simple/$(scutil --get LocalHostName)/" flake.nix
+```
+Make sure to change `nixpkgs.hostPlatform` to `aarch64-darwin` if you are using Apple Silicon.
+
+3. Install nix-darwin
+```sh
+# nix run nix-darwin/master#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch # for the unstable version
+nix run nix-darwin/nix-darwin-24.11#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch
 ```
 
-3. Build the configuration
+4. You can now clone the dotfiles repository (you will maybe need to add git to the package list in your `flake.nix`)
 ```sh
-nix run nix-darwin --extra-experimental-features "nix-command flakes" -- switch --flake ~/.config/nix-darwin
-```
+cd ~
 
-4. You can now clone the dotfiles repository
-```sh
 git clone https://github.com/LaulauChau/dotfiles.git
 
-cp ~/dotfiles/.config/nix-darwin/home.nix ~/.config/nix-darwin/home.nix
+cp ~/dotfiles/.config/nix-darwin/flake.nix /etc/nix-darwin/flake.nix
 ```
 
 5. Apply changes to your system (this will be the command you will run everytime you update any dotfile)
 ```sh
-darwin-rebuild switch --flake ~/.config/nix-darwin --impure
+darwin-rebuild switch
+```
+
+6. Sync the other dotfiles
+```sh
+cd ~/dotfiles
+
+stow .
 ```
