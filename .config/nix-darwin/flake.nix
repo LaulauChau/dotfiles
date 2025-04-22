@@ -2,8 +2,8 @@
   description = "Zenful nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
@@ -17,6 +17,8 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
+          pkgs.act
+          pkgs.android-tools
           pkgs.air
           pkgs.bat
           pkgs.cargo
@@ -24,18 +26,24 @@
           pkgs.fd
           pkgs.fnm
           pkgs.fzf
+          pkgs.gh
           pkgs.git
           pkgs.go
-          pkgs.mkalias
+          pkgs.golangci-lint
+          pkgs.gosec
+          pkgs.go-migrate
+          pkgs.lazygit
           pkgs.neovim
           pkgs.oh-my-posh
           pkgs.python3
+          pkgs.qmk
           pkgs.ripgrep
+          pkgs.rustup
           pkgs.templ
           pkgs.tmux
           pkgs.tree
+          pkgs.sqlc
           pkgs.stow
-          pkgs.vscode
           pkgs.wget
           pkgs.yazi
           pkgs.zoxide
@@ -47,13 +55,15 @@
           "minikube"
         ];
         casks = [
+          "android-studio"
           "battery"
-          "chromium"
+          "cursor"
           "docker"
           "ghostty"
           "hiddenbar"
-          "librewolf"
           "scroll-reverser"
+          "the-unarchiver"
+          "zen-browser"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
@@ -62,7 +72,8 @@
 
       fonts.packages =
         [
-          (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+          # (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+          pkgs.nerd-fonts.jetbrains-mono
         ];
 
       system.activationScripts.applications.text = let
@@ -86,7 +97,7 @@
             '';
 
       # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
+      # services.nix-daemon.enable = true;
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
@@ -105,14 +116,14 @@
       nixpkgs.hostPlatform = "aarch64-darwin";
 
       users.users.lachau.home = "/Users/lachau";
-      nix.configureBuildUsers = true;
-      nix.useDaemon = true;
+      # nix.configureBuildUsers = true;
+      # nix.useDaemon = true;
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#MacBook-Pro-de-Laurent
-    darwinConfigurations."MacBook-Pro-de-Laurent" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."amaterasu" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
         nix-homebrew.darwinModules.nix-homebrew
