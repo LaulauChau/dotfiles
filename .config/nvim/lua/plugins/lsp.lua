@@ -18,6 +18,7 @@ return {
 				"goimports",
 				"isort",
 				"prettierd",
+        "rustfmt",
 				"stylua",
 			},
 		},
@@ -67,6 +68,7 @@ return {
 					-- Backend
 					"gopls",
 					"pyright",
+          "rust_analyzer",
 
 					-- Infrastructure
 					"dockerls",

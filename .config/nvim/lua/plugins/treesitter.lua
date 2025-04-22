@@ -13,6 +13,7 @@ return {
 				"lua",
 				"markdown",
 				"python",
+        "rust",
 				"templ",
 				"typescript",
 				"vim",

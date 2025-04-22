@@ -1,4 +1,3 @@
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -19,17 +18,14 @@ require("config.keymaps")
 require("config.options")
 require("config.autocmds")
 
--- Setup lazy.nvim
 require("lazy").setup({
 	change_detection = { notify = false },
-	-- Automatically check for plugin updates
 	checker = {
 		enabled = true,
 		notify = false,
 	},
 	performance = {
 		rtp = {
-			-- Disable some rtp plugins
 			disabled_plugins = {
 				"gzip",
 				"matchit",
@@ -43,7 +39,6 @@ require("lazy").setup({
 		},
 	},
 	spec = {
-		-- Import your plugins
 		{ import = "plugins" },
 	},
 })

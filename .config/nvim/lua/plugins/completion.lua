@@ -63,6 +63,18 @@ return {
 		cmd = "Copilot",
 		event = "InsertEnter",
 		opts = {
+      copilot_node_command = "node", -- Node.js version must be > 18.x
+      filetypes = {
+        yaml = false,
+        markdown = false,
+        help = false,
+        gitcommit = false,
+        gitrebase = false,
+        hgcommit = false,
+        svn = false,
+        cvs = false,
+        ["."] = false,
+      },
 			panel = {
 				enabled = true,
 				auto_refresh = false,
@@ -78,6 +90,9 @@ return {
 					ratio = 0.4,
 				},
 			},
+      server_opts_overrides = {
+        encoding = "utf-8",
+      },
 			suggestion = {
 				enabled = true,
 				auto_trigger = true,
@@ -90,21 +105,6 @@ return {
 					prev = "<M-[>",
 					dismiss = "<C-]>",
 				},
-			},
-			filetypes = {
-				yaml = false,
-				markdown = false,
-				help = false,
-				gitcommit = false,
-				gitrebase = false,
-				hgcommit = false,
-				svn = false,
-				cvs = false,
-				["."] = false,
-			},
-			copilot_node_command = "node", -- Node.js version must be > 18.x
-			server_opts_overrides = {
-				encoding = "utf-8",
 			},
 		},
 	},

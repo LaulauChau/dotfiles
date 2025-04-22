@@ -26,6 +26,7 @@ return {
 				json = { { "biome", "prettierd", "prettier" } },
 				lua = { "stylua" },
 				python = { "black", "isort" },
+				rust = { "rustfmt" },
 				terraform = { "terraform_fmt" },
 				typescript = { { "biome", "prettierd", "prettier" } },
 				yaml = { { "prettierd", "prettier" } },
