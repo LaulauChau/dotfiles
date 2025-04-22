@@ -23,7 +23,6 @@ zinit light Aloxaf/fzf-tab
 # Add in snippets
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::command-not-found
 
 # Load completions
@@ -63,7 +62,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Aliases
 alias ls='ls -lah --color'
 alias vim='nvim'
-alias c='clear'
+alias c="open $1 -a \"Cursor\""
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -73,3 +72,12 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 export EDITOR=nvim
 export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
 export PATH="$PATH":"$HOME/.local/scripts/"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/lachau/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
