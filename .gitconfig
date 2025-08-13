@@ -1,5 +1,5 @@
 [init]
-	defaultBranch = master
+	defaultBranch = main
 [user]
 	email = mplaurent.chau@gmail.com
 	name = Laurent Chau

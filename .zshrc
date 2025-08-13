@@ -1,3 +1,10 @@
+export EDITOR=nvim
+export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
+export PATH="$PATH":"$HOME/.local/scripts/"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -60,19 +67,15 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
+alias bat='bat --theme="Dracula"'
+alias c="open $1 -a \"Cursor\""
 alias ls='ls -lah --color'
 alias vim='nvim'
-alias c="open $1 -a \"Cursor\""
 
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(fnm env --use-on-cd --shell zsh)"
-
-export EDITOR=nvim
-export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
-export PATH="$PATH":"$HOME/.local/scripts/"
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/lachau/Library/pnpm"
