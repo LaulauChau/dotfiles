@@ -17,26 +17,23 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-          pkgs.act
-          pkgs.android-tools
           pkgs.air
           pkgs.bat
+          pkgs.brave
+          pkgs.bun
           pkgs.cargo
-          pkgs.discord
-          pkgs.fd
           pkgs.fnm
           pkgs.fzf
           pkgs.gh
           pkgs.git
           pkgs.go
           pkgs.golangci-lint
-          pkgs.gosec
           pkgs.go-migrate
-          pkgs.lazygit
+          pkgs.gosec
           pkgs.neovim
           pkgs.oh-my-posh
+          pkgs.pnpm
           pkgs.python3
-          pkgs.qmk
           pkgs.ripgrep
           pkgs.rustup
           pkgs.templ
@@ -45,7 +42,6 @@
           pkgs.sqlc
           pkgs.stow
           pkgs.wget
-          pkgs.yazi
           pkgs.zoxide
         ];
 
@@ -55,15 +51,15 @@
           "minikube"
         ];
         casks = [
-          "android-studio"
           "battery"
           "cursor"
-          "docker"
+          "docker-desktop"
           "ghostty"
           "hiddenbar"
+          "legcord"
           "scroll-reverser"
+          "telegram"
           "the-unarchiver"
-          "zen-browser"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
@@ -80,7 +76,7 @@
         env = pkgs.buildEnv {
           name = "system-applications";
           paths = config.environment.systemPackages;
-          pathsToLink = "/Applications";
+          pathsToLink = [ "/Applications" ];
         };
       in
         pkgs.lib.mkForce ''
@@ -115,6 +111,7 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
 
+      system.primaryUser = "lachau";
       users.users.lachau.home = "/Users/lachau";
       # nix.configureBuildUsers = true;
       # nix.useDaemon = true;
