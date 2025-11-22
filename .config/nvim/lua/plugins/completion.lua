@@ -43,26 +43,6 @@ return {
 		config = function(_, opts)
 			local npairs = require("nvim-autopairs")
 			npairs.setup(opts)
-
-			local ok, blink = pcall(require, "blink.cmp")
-			if not ok then
-				return
-			end
-
-			blink.setup({
-				completion = {
-					accept = {
-						trigger = {
-							after = function(item, ctx)
-								local cmp_ok, autopairs_cmp = pcall(require, "nvim-autopairs.completion.cmp")
-								if cmp_ok and autopairs_cmp and autopairs_cmp.on_confirm_done then
-									autopairs_cmp.on_confirm_done()(item, ctx)
-								end
-							end,
-						},
-					},
-				},
-			})
 		end,
 		event = "InsertEnter",
 		opts = {
