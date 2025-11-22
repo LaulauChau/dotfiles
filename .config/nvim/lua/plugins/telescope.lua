@@ -19,6 +19,7 @@ return {
 				desc = "Telescope multi grep",
 			},
 			{ "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "Telescope buffers" },
+			{ "<leader>fd", "<CMD>Telescope diagnostics<CR>", desc = "Telescope diagnostics" },
 			{ "<leader>fh", "<CMD>Telescope help-tags<CR>", desc = "Telescope help tags" },
 		},
 		opts = {

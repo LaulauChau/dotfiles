@@ -12,13 +12,20 @@ return {
 		},
 		opts = {
 			ensure_installed = {
+				-- JS/TS formatting & linting
 				"biome",
+				"eslint_d",
+				"prettierd",
+
+				-- Python
 				"black",
+				"isort",
+
+				-- Go
 				"gofumpt",
 				"goimports",
-				"isort",
-				"prettierd",
-        "rustfmt",
+
+				-- Lua
 				"stylua",
 			},
 		},
@@ -50,6 +57,9 @@ return {
 					vim.keymap.set("n", "gs", "<CMD>lua vim.lsp.buf.signature_help()<CR>", opts)
 					vim.keymap.set("n", "cr", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
 					vim.keymap.set("n", "ca", "<CMD>lua vim.lsp.buf.code_action()<CR>", opts)
+					vim.keymap.set("n", "<leader>e", "<CMD>lua vim.diagnostic.open_float()<CR>", opts)
+					vim.keymap.set("n", "[d", "<CMD>lua vim.diagnostic.goto_prev()<CR>", opts)
+					vim.keymap.set("n", "]d", "<CMD>lua vim.diagnostic.goto_next()<CR>", opts)
 				end,
 				desc = "LSP actions",
 			})
@@ -68,7 +78,7 @@ return {
 					-- Backend
 					"gopls",
 					"pyright",
-          "rust_analyzer",
+					"rust_analyzer",
 
 					-- Infrastructure
 					"dockerls",

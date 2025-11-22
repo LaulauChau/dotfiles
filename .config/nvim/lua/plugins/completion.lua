@@ -13,6 +13,10 @@ return {
 				use_nvim_cmp_as_default = true,
 			},
 
+			fuzzy = {
+				implementation = "lua",
+			},
+
 			-- 'default' for mappings similar to built-in completion
 			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
@@ -40,11 +44,23 @@ return {
 			local npairs = require("nvim-autopairs")
 			npairs.setup(opts)
 
-			require("blink.cmp").setup({
+			local ok, blink = pcall(require, "blink.cmp")
+			if not ok then
+				return
+			end
+
+			blink.setup({
 				completion = {
-					on_confirm_done = function()
-						require("nvim-autopairs.completion.cmp").on_confirm_done()()
-					end,
+					accept = {
+						trigger = {
+							after = function(item, ctx)
+								local cmp_ok, autopairs_cmp = pcall(require, "nvim-autopairs.completion.cmp")
+								if cmp_ok and autopairs_cmp and autopairs_cmp.on_confirm_done then
+									autopairs_cmp.on_confirm_done()(item, ctx)
+								end
+							end,
+						},
+					},
 				},
 			})
 		end,
@@ -54,57 +70,6 @@ return {
 			ts_config = {
 				lua = { "string" },
 				javascript = { "template_string" },
-			},
-		},
-	},
-
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		opts = {
-			copilot_node_command = "node", -- Node.js version must be > 18.x
-			filetypes = {
-				yaml = false,
-				markdown = false,
-				help = false,
-				gitcommit = false,
-				gitrebase = false,
-				hgcommit = false,
-				svn = false,
-				cvs = false,
-				["."] = false,
-			},
-			panel = {
-				enabled = true,
-				auto_refresh = false,
-				keymap = {
-					jump_prev = "[[",
-					jump_next = "]]",
-					accept = "<CR>",
-					refresh = "gr",
-					open = "<M-CR>",
-				},
-				layout = {
-					position = "bottom", -- | top | left | right
-					ratio = 0.4,
-				},
-			},
-			server_opts_overrides = {
-				encoding = "utf-8",
-			},
-			suggestion = {
-				enabled = true,
-				auto_trigger = true,
-				debounce = 75,
-				keymap = {
-					accept = "<M-l>",
-					accept_word = false,
-					accept_line = "<C-j>",
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
-				},
 			},
 		},
 	},
