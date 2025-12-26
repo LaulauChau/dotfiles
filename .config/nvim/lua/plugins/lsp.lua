@@ -27,6 +27,9 @@ return {
 
 				-- Lua
 				"stylua",
+
+				"hadolint",
+				"trivy",
 			},
 		},
 	},

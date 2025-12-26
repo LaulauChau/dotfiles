@@ -27,7 +27,7 @@ return {
 			-- experimental signature help support
 			signature = { enabled = true },
 		},
-		version = "v1.*",
+		version = "1.*",
 	},
 
 	{
