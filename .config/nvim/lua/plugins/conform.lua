@@ -7,7 +7,7 @@ local function web_formatter(bufnr)
 	return has_biome and { "biome" } or { "prettierd" }
 end
 
-local web_filetypes = {
+local fmt_filetypes = {
 	"css",
 	"html",
 	"javascript",
@@ -42,7 +42,7 @@ return {
 				},
 			}
 
-			for _, ft in ipairs(web_filetypes) do
+			for _, ft in ipairs(fmt_filetypes) do
 				opts.formatters_by_ft[ft] = web_formatter
 			end
 
