@@ -1,42 +1,66 @@
 return {
 	{
-		"nvim-telescope/telescope.nvim",
-		config = function()
-			require("telescope").load_extension("fzf")
-		end,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		"folke/snacks.nvim",
+		lazy = false,
+		priority = 1000,
+		--@type snacks.Config
+		opts = {
+			picker = {
+				enabled = true,
+				layout = { style = "telescope" },
+				ui_select = true,
+			},
 		},
 		keys = {
-			{ "<leader>ff", "<CMD>Telescope find_files<CR>", desc = "Telescope find files" },
+			{
+				"<leader>ff",
+				function()
+					Snacks.picker.files()
+				end,
+				desc = "Find Files",
+			},
+			{
+				"<leader>fb",
+				function()
+					Snacks.picker.buffers()
+				end,
+				desc = "Buffers",
+			},
+			{
+				"<leader>fd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "Diagnostics",
+			},
+			{
+				"<leader>fh",
+				function()
+					Snacks.picker.help()
+				end,
+				desc = "Help Tags",
+			},
 			{
 				"<leader>fg",
 				function()
-					require("config.telescope.multigrep")()
+					Snacks.picker.grep({
+						live = true,
+						title = "Multi Grep",
+						on_change = function(picker)
+							local input = picker.input.text
+							-- Split by double space to handle pattern + glob
+							local pieces = vim.split(input, "  ", { plain = true })
+
+							-- Dynamically update the ripgrep arguments
+							picker:set_filter({
+								search = pieces[1] or "",
+								glob = pieces[2] or "",
+							})
+						end,
+					})
 				end,
-				desc = "Telescope multi grep",
-			},
-			{ "<leader>fb", "<CMD>Telescope buffers<CR>", desc = "Telescope buffers" },
-			{ "<leader>fd", "<CMD>Telescope diagnostics<CR>", desc = "Telescope diagnostics" },
-			{ "<leader>fh", "<CMD>Telescope help-tags<CR>", desc = "Telescope help tags" },
-		},
-		opts = {
-			defaults = {
-				vimgrep_arguments = {
-					"rg",
-					"--color=never",
-					"--no-heading",
-					"--with-filename",
-					"--line-number",
-					"--column",
-					"--smart-case",
-				},
-			},
-			extensions = {
-				fzf = {},
+				desc = "Multi Grep (pattern  glob)",
 			},
 		},
-		tag = "v0.2.0",
 	},
 }

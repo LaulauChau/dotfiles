@@ -1,29 +1,28 @@
-local function web_formatter(bufnr)
-	local has_biome = vim.fs.find({ "biome.json", "biome.jsonc" }, {
-		path = vim.api.nvim_buf_get_name(bufnr),
-		upward = true,
-	})[1]
-
-	return has_biome and { "biome" } or { "prettierd" }
-end
-
-local fmt_filetypes = {
-	"css",
-	"html",
-	"javascript",
-	"javascriptreact",
-	"json",
-	"jsonc",
-	"typescript",
-	"typescriptreact",
-}
-
 return {
 	{
 		"stevearc/conform.nvim",
 		cmd = { "ConformInfo" },
 		event = { "BufWritePre" },
 		opts = function()
+			local function get_web_formatter(bufnr)
+				if vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) then
+					return { "biome" }
+				end
+
+				return { "prettierd" }
+			end
+
+			local fmt_filetypes = {
+				"css",
+				"html",
+				"javascript",
+				"javascriptreact",
+				"json",
+				"jsonc",
+				"typescript",
+				"typescriptreact",
+			}
+
 			local opts = {
 				format_on_save = {
 					lsp_fallback = true,
@@ -32,18 +31,19 @@ return {
 
 				formatters_by_ft = {
 					go = { "gofumpt", "goimports" },
+					hcl = { "terraform_fmt" },
 					lua = { "stylua" },
-					markdown = { "prettierd", "prettier" },
-					python = { "black", "isort" },
+					markdown = { "prettierd" },
 					rust = { "rustfmt" },
+					sh = { "shfmt" },
 					terraform = { "terraform_fmt" },
-					yaml = { "prettierd", "prettier" },
+					yaml = { "prettierd" },
 					["_"] = { "trim_whitespace" },
 				},
 			}
 
 			for _, ft in ipairs(fmt_filetypes) do
-				opts.formatters_by_ft[ft] = web_formatter
+				opts.formatters_by_ft[ft] = get_web_formatter
 			end
 
 			return opts
