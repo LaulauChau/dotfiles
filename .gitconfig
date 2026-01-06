@@ -1,7 +1,7 @@
 [init]
 	defaultBranch = main
 [user]
-	email = mplaurent.chau@gmail.com
+	email = laurent.chau@proton.me
 	name = Laurent Chau
 [core]
 	editor = nvim

@@ -1,0 +1,54 @@
+@import "./rose-pine.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: transparent; /* Makes the bar float */
+}
+
+#workspaces,
+#clock,
+#pulseaudio,
+#network,
+#tray {
+  background: @base;
+  color: @text; /* Everything is now neutral */
+  padding: 0 16px;
+  margin: 0 4px;
+  border-radius: 10px;
+}
+
+/* Zen Logic: Only use color for focus or alerts */
+
+#workspaces button {
+  color: @muted;
+}
+
+#workspaces button.focused {
+  color: @rose; /* Focus indicator */
+}
+
+#clock {
+  background: @base;
+  color: @foam;
+  padding: 0 20px; /* Increased padding for the longer date */
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+#pulseaudio.muted {
+  color: @love; /* Only show red when sound is off */
+}
+
+#network.disconnected {
+  color: @love; /* Only show red when internet is down */
+}
+
+#tray {
+  padding-right: 12px;
+}

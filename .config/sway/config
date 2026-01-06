@@ -1,0 +1,119 @@
+exec dbus-update-activation-environment --all
+
+### Variables
+set $mod   Mod4
+set $term  ghostty
+set $menu  fuzzel
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
+### Visuals (Zen & No Titles)
+for_window [app_id=".*"] border pixel 2
+for_window [class=".*"]  border pixel 2
+for_window [app_id="swayimg"] floating enable
+for_window [app_id="mpv"]     floating enable
+for_window [app_id="pavucontrol"]     floating enable
+
+default_border pixel 2
+default_floating_border pixel 2
+smart_borders on
+smart_gaps on
+gaps inner 12
+gaps outer 4
+
+# Rosé Pine
+set $base #191724
+set $text #e0def4
+set $rose #ebbcba
+set $love #eb6f92
+
+client.focused           $rose $base $text $rose $rose
+client.focused_inactive  $base $base $text $base $base
+client.unfocused         $base $base $text $base $base
+client.urgent            $love $base $text $love $love
+
+### Input/Output
+output * bg /home/lachau/images/background.jpg fill
+input type:keyboard {
+    xkb_layout "fr"
+}
+
+# Lock & Idle (Re-enabled)
+set $lock_cmd /home/lachau/.config/sway/lock.sh
+bindsym $mod+Escape exec $lock_cmd
+
+exec swayidle -w \
+    timeout 300 $lock_cmd \
+    timeout 600 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
+    before-sleep $lock_cmd
+
+### Keybindings
+bindsym $mod+Return  exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d       exec $menu
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit?' -B 'Yes' 'swaymsg exit'
+
+# Navigation
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+
+# Workspaces (AZERTY Switch: $mod+key | Move: $mod+Shift+key)
+bindsym $mod+ampersand  workspace 1
+bindsym $mod+eacute     workspace 2
+bindsym $mod+quotedbl   workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft  workspace 5
+bindsym $mod+minus      workspace 6
+bindsym $mod+egrave     workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla   workspace 9
+bindsym $mod+agrave     workspace 10
+
+bindsym $mod+1 move container to workspace 1
+bindsym $mod+2 move container to workspace 2
+bindsym $mod+3 move container to workspace 3
+bindsym $mod+4 move container to workspace 4
+bindsym $mod+5 move container to workspace 5
+bindsym $mod+6 move container to workspace 6
+bindsym $mod+7 move container to workspace 7
+bindsym $mod+8 move container to workspace 8
+bindsym $mod+9 move container to workspace 9
+bindsym $mod+0 move container to workspace 10
+
+# Layout & Special
+bindsym $mod+b           splith
+bindsym $mod+v           splitv
+bindsym $mod+e           layout toggle split
+bindsym $mod+f           fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+p           exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
+
+# Audio (Pipewire/wpctl)
+bindsym --locked XF86AudioMute        exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+
+mode "resize" {
+    bindsym $left  resize shrink width 10px
+    bindsym $down  resize grow height 10px
+    bindsym $up    resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+### Autostart
+exec waybar
+exec wl-clip-persist --clipboard regular
