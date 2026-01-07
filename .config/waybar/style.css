@@ -45,6 +45,26 @@ window#waybar {
   color: @love; /* Only show red when sound is off */
 }
 
+#custom-brightness {
+  background: @base;
+  color: @gold; /* Using Gold for light/sun vibe */
+  padding: 0 15px;
+  margin: 0 4px;
+  border-radius: 10px;
+}
+
+#custom-temperature {
+  background: @base;
+  color: @iris; /* Rosé Pine purple */
+  padding: 0 15px;
+  margin: 0 4px;
+  border-radius: 10px;
+}
+
+#custom-temperature.off {
+  color: @subtle; /* Grayscale when inactive */
+}
+
 #network.disconnected {
   color: @love; /* Only show red when internet is down */
 }

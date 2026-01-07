@@ -4,6 +4,7 @@ exec dbus-update-activation-environment --all
 set $mod   Mod4
 set $term  ghostty
 set $menu  fuzzel
+set $explorer dolphin
 set $left  h
 set $down  j
 set $up    k
@@ -42,7 +43,7 @@ input type:keyboard {
 
 # Lock & Idle (Re-enabled)
 set $lock_cmd /home/lachau/.config/sway/lock.sh
-bindsym $mod+Escape exec $lock_cmd
+bindsym $mod+Ctrl+q exec $lock_cmd
 
 exec swayidle -w \
     timeout 300 $lock_cmd \
@@ -52,6 +53,7 @@ exec swayidle -w \
 
 ### Keybindings
 bindsym $mod+Return  exec $term
+bindsym $mod+x       exec $explorer
 bindsym $mod+Shift+q kill
 bindsym $mod+d       exec $menu
 bindsym $mod+Shift+c reload
@@ -67,6 +69,12 @@ bindsym $mod+Shift+$left  move left
 bindsym $mod+Shift+$down  move down
 bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
+
+# --- Brightness Control (Non-media keys) ---
+bindsym $mod+F11 exec ~/.config/waybar/brightness.sh down
+bindsym $mod+F12 exec ~/.config/waybar/brightness.sh up
+
+bindsym $mod+F10 exec ~/.config/waybar/temperature.sh toggle
 
 # Workspaces (AZERTY Switch: $mod+key | Move: $mod+Shift+key)
 bindsym $mod+ampersand  workspace 1
@@ -115,5 +123,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 ### Autostart
+exec wlsunset -l 48.8 -L 2.3 -t 4000 -T 6500
 exec waybar
 exec wl-clip-persist --clipboard regular

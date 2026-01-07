@@ -8,7 +8,13 @@
   "margin-bottom": 8,
   "modules-left": ["sway/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "tray"],
+  "modules-right": [
+    "pulseaudio",
+    "custom/brightness",
+    "custom/temperature",
+    "network",
+    "tray",
+  ],
 
   "sway/workspaces": {
     "disable-scroll": true,
@@ -23,6 +29,25 @@
     "format-muted": "󰝟 Muted",
     "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
     "on-click": "pavucontrol",
+  },
+  "custom/brightness": {
+    "format": "{icon} {percentage}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "return-type": "json",
+    "exec": "echo \"{\\\"percentage\\\": $(~/.config/waybar/brightness.sh get)}\"",
+    "on-scroll-up": "~/.config/waybar/brightness.sh up",
+    "on-scroll-down": "~/.config/waybar/brightness.sh down",
+    "signal": 9,
+    "interval": "once",
+  },
+  "custom/temperature": {
+    "format": "󰛨 {text}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/temperature.sh",
+    "on-click": "~/.config/waybar/temperature.sh toggle",
+    "signal": 8,
+    "interval": "once",
+    "tooltip": false,
   },
   "network": {
     "format-wifi": "󰖩",
