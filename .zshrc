@@ -1,6 +1,6 @@
 # --- SYSTEM & ENVS ---
 export EDITOR=nvim
-export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
+export FZF_DEFAULT_OPTS='--preview "if [[ -d {} ]]; then tree -C --gitignore -L 2 {} && echo && [[ -f {}/README.md ]] && bat --color=always --line-range=:20 {}/README.md; else bat --color=always --style=numbers --line-range=:500 {}; fi"'
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -65,7 +65,7 @@ autoload -Uz compinit && compinit
 zinit cdreplay -q
 
 # --- ALIASES ---
-alias bat='bat --theme="Dracula"'
+alias bat='bat --theme="Catppuccin Mocha"'
 alias c="open $1 -a \"Cursor\""
 alias ls='ls -lah --color'
 alias vim='nvim'
