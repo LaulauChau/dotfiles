@@ -13,6 +13,7 @@
     "custom/brightness",
     "custom/temperature",
     "network",
+    "custom/power",
     "tray",
   ],
 
@@ -53,5 +54,10 @@
     "format-wifi": "󰖩",
     "format-ethernet": "󰈀",
     "format-disconnected": "󰖪",
+  },
+  "custom/power": {
+    "format": "󰐥",
+    "on-click": "/home/lachau/.config/sway/power-menu.sh",
+    "tooltip": false,
   },
 }

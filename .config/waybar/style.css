@@ -69,6 +69,15 @@ window#waybar {
   color: @love; /* Only show red when internet is down */
 }
 
+#custom-power {
+  background: @base;
+  color: @love;
+  padding: 0 15px;
+  margin: 0 4px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
 #tray {
   padding-right: 12px;
 }
