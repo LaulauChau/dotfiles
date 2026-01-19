@@ -6,42 +6,73 @@ return {
 			local lint = require("lint")
 
 			lint.linters_by_ft = {
-				dockerfile = { "hadolint" },
+				-- Web Dev
+				javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
+				css = { "stylelint" },
+
+				-- Infrastructure
 				sh = { "shellcheck" },
+				bash = { "shellcheck" },
+				python = { "ruff" },
+				go = { "golangcilint" },
+				yaml = { "yamllint" },
 				terraform = { "tflint" },
-				yaml = { "actionlint" },
+				tf = { "tflint" },
+				dockerfile = { "hadolint" },
 			}
 
-			local function get_linter()
-				local bufnr = vim.api.nvim_get_current_buf()
-				local ft = vim.bo[bufnr].filetype
-				local web_types = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
+			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-				if vim.tbl_contains(web_types, ft) then
-					-- Check for biome config
-					local name = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) and "biome" or "eslint_d"
-
-					-- Ensure the linter definition exists in nvim-lint
-					-- and the binary is actually on the system
-					if lint.linters[name] and vim.fn.executable(lint.linters[name].cmd) == 1 then
-						return name
-					end
-				end
-				return nil
-			end
-
-			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
-				group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+				group = lint_augroup,
 				callback = function()
-					lint.try_lint()
+					-- Get configured linters for current filetype
+					local names = lint._resolve_linter_by_ft(vim.bo.filetype)
+					if not names or #names == 0 then
+						return
+					end
 
-					local dynamic_linter = get_linter()
+					-- Filter to only linters that exist
+					local available = {}
+					for _, name in ipairs(names) do
+						local linter = lint.linters[name]
+						if linter and type(linter.cmd) == "string" and vim.fn.executable(linter.cmd) == 1 then
+							table.insert(available, name)
+						end
+					end
 
-					if dynamic_linter then
-						lint.try_lint(dynamic_linter)
+					-- Only lint if we have available linters
+					if #available > 0 then
+						lint.try_lint(available)
 					end
 				end,
 			})
+
+			vim.keymap.set("n", "<leader>l", function()
+				local names = lint._resolve_linter_by_ft(vim.bo.filetype)
+				if not names or #names == 0 then
+					vim.notify("No linters configured for this filetype", vim.log.levels.INFO)
+					return
+				end
+
+				local available = {}
+				for _, name in ipairs(names) do
+					local linter = lint.linters[name]
+					if linter and type(linter.cmd) == "string" and vim.fn.executable(linter.cmd) == 1 then
+						table.insert(available, name)
+					end
+				end
+
+				if #available > 0 then
+					lint.try_lint(available)
+					vim.notify("Running linters: " .. table.concat(available, ", "), vim.log.levels.INFO)
+				else
+					vim.notify("No linters available (install with :MasonToolsInstall)", vim.log.levels.WARN)
+				end
+			end, { desc = "Trigger linting for current file" })
 		end,
 	},
 }

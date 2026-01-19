@@ -22,10 +22,10 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- --- LIST NAVIGATION (Quickfix & Location) ---
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "]l", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "[l", "<cmd>lprev<CR>zz")
 
 -- --- SEARCH & UTILS ---
 -- Search and replace word under cursor
