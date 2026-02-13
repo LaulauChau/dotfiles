@@ -13,46 +13,45 @@
     configuration = { pkgs, config, ... }: {
       nixpkgs.config.allowUnfree = true;
 
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-          pkgs.air
+          # Shell & Terminal
           pkgs.bat
-          pkgs.brave
-          pkgs.bun
-          pkgs.cargo
-          pkgs.fnm
           pkgs.fzf
-          pkgs.gh
-          pkgs.git
-          pkgs.go
-          pkgs.golangci-lint
-          pkgs.go-migrate
-          pkgs.gosec
-          pkgs.neovim
           pkgs.oh-my-posh
-          pkgs.pnpm
-          pkgs.python3
           pkgs.ripgrep
-          pkgs.rustup
-          pkgs.templ
           pkgs.tmux
           pkgs.tree
-          pkgs.sqlc
+          pkgs.zoxide
+
+          # Editor & git
+          pkgs.git
+          pkgs.gnupg
+          pkgs.lazygit
+          pkgs.neovim
+
+          # Version managers
+          pkgs.fnm
+          pkgs.rustup
+          pkgs.uv
+
+          # Utilities
+          pkgs.direnv
+          pkgs.ollama
+          pkgs.opencode
+          pkgs.qmk
           pkgs.stow
           pkgs.wget
-          pkgs.zoxide
+          pkgs.wimlib
         ];
 
       homebrew = {
         enable = true;
-        brews = [
-          "minikube"
-        ];
+        brews = [];
         casks = [
           "battery"
-          "cursor"
+          "brave-browser"
+          "bruno"
           "docker-desktop"
           "ghostty"
           "hiddenbar"
@@ -60,6 +59,7 @@
           "scroll-reverser"
           "telegram"
           "the-unarchiver"
+          "zed"
         ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
@@ -113,8 +113,6 @@
 
       system.primaryUser = "lachau";
       users.users.lachau.home = "/Users/lachau";
-      # nix.configureBuildUsers = true;
-      # nix.useDaemon = true;
     };
   in
   {
@@ -133,6 +131,25 @@
           };
         }
       ];
+    };
+
+    templates = {
+      default = {
+        description = "Base devshell";
+        path = ./templates/default;
+      };
+      go = {
+        description = "Go devshell";
+        path = ./templates/go;
+      };
+      js = {
+        description = "JS/TS devshell";
+        path = ./templates/js;
+      };
+      python = {
+        description = "Python devshell";
+        path = ./templates/python;
+      };
     };
   };
 }

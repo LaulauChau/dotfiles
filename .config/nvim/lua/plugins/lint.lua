@@ -14,13 +14,8 @@ return {
 				css = { "stylelint" },
 
 				-- Infrastructure
-				sh = { "shellcheck" },
-				bash = { "shellcheck" },
-				python = { "ruff" },
 				go = { "golangcilint" },
 				yaml = { "yamllint" },
-				terraform = { "tflint" },
-				tf = { "tflint" },
 				dockerfile = { "hadolint" },
 			}
 

@@ -6,11 +6,6 @@ return {
       require("nvim-treesitter").setup({
         auto_install = true,
         ensure_installed = {
-          -- Neovim
-          "lua",
-          "vim",
-          "vimdoc",
-
           -- Web Dev
           "typescript",
           "javascript",
@@ -20,24 +15,19 @@ return {
           "css",
           "json",
           "jsonc",
-
-          -- Infrastructure
-          "bash",
-          "dockerfile",
-          "yaml",
-          "toml",
-          "hcl",          -- Terraform
-          "go",
-          "python",
-          "rust",
-
-          -- Markup/Config
           "markdown",
           "markdown_inline",
-          "regex",
+
+          -- Infrastructure
+          "dockerfile",
+          "yaml",
+          "go",
         },
         highlight = {
           additional_vim_regex_highlighting = false,
+          enable = true,
+        },
+        indent = {
           enable = true,
         },
         sync_install = false,

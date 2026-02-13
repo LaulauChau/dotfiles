@@ -12,19 +12,14 @@ return {
 		opts = {
 			ensure_installed = {
 				-- Formatters
-				"stylua",
 				"prettierd",
-				"shfmt",
-				"ruff",
 				"goimports",
 
 				-- Linters
 				"eslint_d",
 				"stylelint",
-				"shellcheck",
 				"golangci-lint",
 				"yamllint",
-				"tflint",
 				"hadolint",
 			},
 		},
@@ -48,17 +43,21 @@ return {
 					vim.keymap.set("n", "]d", function()
 						vim.diagnostic.jump({ count = 1, float = true })
 					end, opts)
-					vim.keymap.set("n", "<C-h>", vim.lsp.buf.signature_help, opts)
+					vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts)
 					vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts)
 					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 				end,
 			})
 
+			vim.filetype.add({
+				pattern = {
+					["tsconfig*.json"] = "jsonc",
+					["jsconfig*.json"] = "jsonc",
+				},
+			})
+
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					-- Lua
-					"lua_ls",
-
 					-- Web Dev
 					"vtsls",
 					"html",
@@ -67,15 +66,10 @@ return {
 					"jsonls",
 
 					-- Infrastructure
-					"bashls",
 					"dockerls",
 					"docker_compose_language_service",
 					"yamlls",
-					"helm_ls",
-					"terraformls",
 					"gopls",
-					"basedpyright",
-					"rust_analyzer",
 				},
 				handlers = {
 					function(server_name)
@@ -89,6 +83,7 @@ return {
 							settings = {
 								json = {
 									schemas = require("schemastore").json.schemas(),
+									format = { enable = true },
 									validate = { enable = true },
 								},
 							},
@@ -116,14 +111,6 @@ return {
 		end,
 		dependencies = {
 			{ "b0o/SchemaStore.nvim" },
-			{
-				"folke/lazydev.nvim",
-				opts = {
-					library = {
-						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-					},
-				},
-			},
 			{ "mason-org/mason.nvim" },
 			{ "mason-org/mason-lspconfig.nvim" },
 			"saghen/blink.cmp",

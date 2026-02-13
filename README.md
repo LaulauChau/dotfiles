@@ -41,13 +41,11 @@ nix run nix-darwin/nix-darwin-24.11#darwin-rebuild --extra-experimental-features
 cd ~
 
 git clone https://github.com/LaulauChau/dotfiles.git
-
-cp ~/dotfiles/.config/nix-darwin/flake.nix /etc/nix-darwin/flake.nix
 ```
 
 5. Apply changes to your system (this will be the command you will run everytime you update any dotfile)
 ```sh
-darwin-rebuild switch
+sudo darwin-rebuild switch --flake ~/dotfiles/.config/nix-darwin#hostname
 ```
 
 6. Sync the other dotfiles

@@ -8,11 +8,13 @@ return {
       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end,
     name = "rose-pine",
+    priority = 1000,
   },
 
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
     opts = {
       options = {
         globalstatus = true,

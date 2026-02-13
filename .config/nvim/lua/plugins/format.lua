@@ -9,9 +9,6 @@ return {
         timeout_ms = 500,
       },
       formatters_by_ft = {
-        -- Lua
-        lua = { "stylua" },
-
         -- Web Dev
         javascript = { "prettierd" },
         typescript = { "prettierd" },
@@ -23,18 +20,9 @@ return {
         jsonc = { "prettierd" },
 
         -- Infrastructure
-        sh = { "shfmt" },
-        bash = { "shfmt" },
-        python = { "ruff_format" },
         go = { "goimports", "gofmt" },
-        rust = { "rustfmt" },
-        terraform = { "terraform_fmt" },
-        tf = { "terraform_fmt" },
         yaml = { "prettierd" },
         yml = { "prettierd" },
-
-        -- Markdown
-        markdown = { "prettierd" },
       },
     },
   },
