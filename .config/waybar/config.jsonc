@@ -1,63 +1,81 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 34,
-  "margin-top": 8,
-  "margin-left": 10,
-  "margin-right": 10,
-  "margin-bottom": 8,
-  "modules-left": ["sway/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": [
-    "pulseaudio",
-    "custom/brightness",
-    "custom/temperature",
-    "network",
-    "custom/power",
-    "tray",
+  "height": 36,
+  "spacing": 0,
+  "modules-left": [
+    "hyprland/workspaces"
   ],
-
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "format": "{name}",
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "wireplumber",
+    "backlight",
+    "network",
+    "battery",
+    "custom/power"
+  ],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "●",
+      "default": "○",
+      "empty": "○"
+    },
+    "persistent-workspaces": {
+      "*": 4
+    }
   },
   "clock": {
-    "locale": "en_US.UTF-8", // Force English month names if desired
-    "format": "{:%H:%M  |  %d %B %Y}",
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A %d %B %Y}",
+    "tooltip-format": "<tt>{calendar}</tt>"
   },
-  "pulseaudio": {
+  "wireplumber": {
     "format": "{icon} {volume}%",
-    "format-muted": "󰝟 Muted",
-    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
-    "on-click": "pavucontrol",
+    "format-muted": "󰝟 muted",
+    "format-icons": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ],
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
+    "tooltip-format": "{volume}% — {node_name}"
   },
-  "custom/brightness": {
-    "format": "{icon} {percentage}%",
-    "format-icons": ["󰃞", "󰃟", "󰃠"],
-    "return-type": "json",
-    "exec": "echo \"{\\\"percentage\\\": $(~/.config/waybar/brightness.sh get)}\"",
-    "on-scroll-up": "~/.config/waybar/brightness.sh up",
-    "on-scroll-down": "~/.config/waybar/brightness.sh down",
-    "signal": 9,
-    "interval": "once",
-  },
-  "custom/temperature": {
-    "format": "󰛨 {text}",
-    "return-type": "json",
-    "exec": "~/.config/waybar/temperature.sh",
-    "on-click": "~/.config/waybar/temperature.sh toggle",
-    "signal": 8,
-    "interval": "once",
-    "tooltip": false,
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "󰃞",
+      "󰃟",
+      "󰃠"
+    ],
+    "on-scroll-up": "brightnessctl -e4 -n2 set 2%+",
+    "on-scroll-down": "brightnessctl -e4 -n2 set 2%-"
   },
   "network": {
-    "format-wifi": "󰖩",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰖪",
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈁 ethernet",
+    "format-disconnected": "󰤭 offline",
+    "tooltip-format-wifi": "{ipaddr} — {signalStrength}%",
+    "tooltip-format-ethernet": "{ipaddr}",
+    "tooltip-format-disconnected": "No connection"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "󰁹 {capacity}%",
+    "format-charging": "⚡ {capacity}%",
+    "format-plugged": "⚡ {capacity}%",
+    "tooltip-format": "{capacity}% — {timeTo}"
   },
   "custom/power": {
-    "format": "󰐥",
-    "on-click": "/home/lachau/.config/sway/power-menu.sh",
+    "format": "⏻",
     "tooltip": false,
-  },
+    "on-click": "wlogout --buttons-per-row 3"
+  }
 }

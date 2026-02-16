@@ -1,83 +1,111 @@
-@import "./rose-pine.css";
+/* Rose Pine dark — Waybar */
+
+@define-color base     #191724;
+@define-color surface  #1f1d2e;
+@define-color overlay  #26233a;
+@define-color muted    #6e6a86;
+@define-color subtle   #908caa;
+@define-color text     #e0def4;
+@define-color love     #eb6f92;
+@define-color gold     #f6c177;
+@define-color rose     #ebbcba;
+@define-color pine     #31748f;
+@define-color foam     #9ccfd8;
+@define-color iris     #c4a7e7;
+@define-color hlLow    #21202e;
+@define-color hlMed    #403d52;
+@define-color hlHigh   #524f67;
 
 * {
-  font-family: "JetBrainsMono Nerd Font", sans-serif;
-  font-size: 14px;
-  border: none;
-  border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
 }
 
 window#waybar {
-  background: transparent; /* Makes the bar float */
+    background-color: @base;
+    color: @text;
 }
 
-#workspaces,
-#clock,
-#pulseaudio,
-#network,
-#tray {
-  background: @base;
-  color: @text; /* Everything is now neutral */
-  padding: 0 16px;
-  margin: 0 4px;
-  border-radius: 10px;
-}
+/* ---- Left: workspaces ---- */
 
-/* Zen Logic: Only use color for focus or alerts */
+#workspaces {
+    padding: 0 0 0 10px;
+}
 
 #workspaces button {
-  color: @muted;
+    padding: 0 8px;
+    color: @muted;
+    background: transparent;
+    margin: 3px 2px;
+    transition: all 0.15s ease;
 }
 
-#workspaces button.focused {
-  color: @rose; /* Focus indicator */
+#workspaces button:hover {
+    color: @text;
 }
+
+#workspaces button.active {
+    color: @rose;
+}
+
+#workspaces button.empty {
+    color: @hlHigh;
+}
+
+/* ---- Center: clock ---- */
 
 #clock {
-  background: @base;
-  color: @foam;
-  padding: 0 20px; /* Increased padding for the longer date */
-  font-weight: bold;
-  border-radius: 10px;
+    padding: 0 14px;
+    color: @text;
+    letter-spacing: 0.5px;
 }
 
-#pulseaudio.muted {
-  color: @love; /* Only show red when sound is off */
+/* ---- Right modules ---- */
+
+#wireplumber {
+    padding: 0 10px;
+    color: @text;
 }
 
-#custom-brightness {
-  background: @base;
-  color: @gold; /* Using Gold for light/sun vibe */
-  padding: 0 15px;
-  margin: 0 4px;
-  border-radius: 10px;
+#wireplumber.muted {
+    color: @muted;
 }
 
-#custom-temperature {
-  background: @base;
-  color: @iris; /* Rosé Pine purple */
-  padding: 0 15px;
-  margin: 0 4px;
-  border-radius: 10px;
+#backlight {
+    padding: 0 10px;
+    color: @text;
 }
 
-#custom-temperature.off {
-  color: @subtle; /* Grayscale when inactive */
+#network {
+    padding: 0 10px;
+    color: @text;
 }
 
 #network.disconnected {
-  color: @love; /* Only show red when internet is down */
+    color: @muted;
+}
+
+#battery {
+    padding: 0 10px;
+    color: @text;
+}
+
+#battery.warning {
+    color: @gold;
+}
+
+#battery.critical {
+    color: @love;
+}
+
+#battery.charging {
+    color: @foam;
 }
 
 #custom-power {
-  background: @base;
-  color: @love;
-  padding: 0 15px;
-  margin: 0 4px;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-#tray {
-  padding-right: 12px;
+    padding: 0 14px 0 10px;
+    color: @love;
 }
