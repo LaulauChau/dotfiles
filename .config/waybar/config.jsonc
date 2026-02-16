@@ -3,57 +3,59 @@
   "position": "top",
   "height": 36,
   "spacing": 0,
-  "modules-left": [
-    "hyprland/workspaces"
-  ],
-  "modules-center": [
-    "clock"
-  ],
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
   "modules-right": [
     "wireplumber",
     "backlight",
+    "bluetooth",
     "network",
     "battery",
-    "custom/power"
+    "custom/power",
   ],
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
       "active": "●",
       "default": "○",
-      "empty": "○"
+      "empty": "○",
     },
     "persistent-workspaces": {
-      "*": 4
-    }
+      "*": 4,
+    },
   },
   "clock": {
-    "format": "{:%H:%M}",
+    "format": "{:%H:%M  |  %d %B %Y}",
     "format-alt": "{:%A %d %B %Y}",
-    "tooltip-format": "<tt>{calendar}</tt>"
+    "tooltip-format": "<tt>{calendar}</tt>",
   },
   "wireplumber": {
     "format": "{icon} {volume}%",
     "format-muted": "󰝟 muted",
-    "format-icons": [
-      "󰕿",
-      "󰖀",
-      "󰕾"
-    ],
+    "format-icons": ["󰕿", "󰖀", "󰕾"],
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 2%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
-    "tooltip-format": "{volume}% — {node_name}"
+    "tooltip-format": "{volume}% — {node_name}",
   },
   "backlight": {
     "format": "{icon} {percent}%",
-    "format-icons": [
-      "󰃞",
-      "󰃟",
-      "󰃠"
-    ],
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
     "on-scroll-up": "brightnessctl -e4 -n2 set 2%+",
-    "on-scroll-down": "brightnessctl -e4 -n2 set 2%-"
+    "on-scroll-down": "brightnessctl -e4 -n2 set 2%-",
+  },
+  "bluetooth": {
+    "format": "{icon}",
+    "format-connected": "{icon} {device_alias}",
+    "format-icons": {
+      "enabled": "󰂯",
+      "disabled": "󰂲",
+      "connected": "󰂱"
+    },
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "~/.local/scripts/toggle-bluetooth.sh",
   },
   "network": {
     "format-wifi": "󰤨 {essid}",
@@ -61,21 +63,21 @@
     "format-disconnected": "󰤭 offline",
     "tooltip-format-wifi": "{ipaddr} — {signalStrength}%",
     "tooltip-format-ethernet": "{ipaddr}",
-    "tooltip-format-disconnected": "No connection"
+    "tooltip-format-disconnected": "No connection",
   },
   "battery": {
     "states": {
       "warning": 30,
-      "critical": 15
+      "critical": 15,
     },
     "format": "󰁹 {capacity}%",
     "format-charging": "⚡ {capacity}%",
     "format-plugged": "⚡ {capacity}%",
-    "tooltip-format": "{capacity}% — {timeTo}"
+    "tooltip-format": "{capacity}% — {timeTo}",
   },
   "custom/power": {
     "format": "⏻",
     "tooltip": false,
-    "on-click": "wlogout --buttons-per-row 3"
-  }
+    "on-click": "wlogout --buttons-per-row 3",
+  },
 }

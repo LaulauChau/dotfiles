@@ -10,6 +10,7 @@ let
     hypr = "hypr";
     nvim = "nvim";
     oh-my-posh = "oh-my-posh";
+    swaync = "swaync";
     tmux = "tmux";
     waybar = "waybar";
     wlogout = "wlogout";
@@ -17,71 +18,12 @@ let
 in
 
 {
-  home.username = "lachau";
-  home.homeDirectory = "/home/lachau";
-  home.stateVersion = "25.11";
-  programs.home-manager.enable = true;
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+  home = {
+    username = "lachau";
+    homeDirectory = "/home/lachau";
+    stateVersion = "25.11";
   };
-
-  home.packages = with pkgs; [
-    # Hyprland
-    brightnessctl
-    cliphist
-    fuzzel
-    hypridle
-    hyprlock
-    hyprpaper
-    hyprshot
-    swaynotificationcenter
-    waybar
-    wl-clipboard
-    wlogout
-    wlsunset
-    
-    brave
-    nerd-fonts.jetbrains-mono
-    
-    # Shell & Terminal
-    alacritty
-    bat
-    eza
-    fd
-    fzf
-    oh-my-posh
-    ripgrep
-    tmux
-    tree
-    zoxide
-
-    # Editor & git
-    lazygit
-    neovim
-
-    # Version managers
-    fnm
-    go
-    rustup
-    uv
-
-    # Base development
-    binutils
-    gcc
-    gnumake
-    libffi
-    openssl
-    zlib
-
-    # Utilities
-    claude-code
-    ollama
-    opencode
-    stow
-    wget
-  ];
+  programs.home-manager.enable = true;
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/.config/${subpath}";
@@ -96,4 +38,60 @@ in
       recursive = true;
     };
   };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
+  home.packages = with pkgs; [
+    brightnessctl
+    cliphist
+    fuzzel
+    hypridle
+    hyprlock
+    hyprpaper
+    hyprshot
+    libnotify
+    swaynotificationcenter
+    waybar
+    wl-clipboard
+    wlogout
+    wlsunset
+
+    brave
+    nerd-fonts.jetbrains-mono
+
+    alacritty
+    bat
+    eza
+    fd
+    fzf
+    oh-my-posh
+    ripgrep
+    tmux
+    tree
+    zoxide
+
+    lazygit
+    neovim
+
+    fnm
+    go
+    rustup
+    uv
+
+    binutils
+    gcc
+    gnumake
+    libffi
+    openssl
+    zlib
+
+    claude-code
+    ollama
+    opencode
+    stow
+    wget
+  ];
 }
