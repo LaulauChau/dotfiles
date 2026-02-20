@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     git
     gnupg
+    go
   ];
 
   imports = [

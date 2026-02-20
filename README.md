@@ -44,7 +44,8 @@ Templates provide pre-configured development environments. They use `direnv` for
 | `default` | Base devshell | None (empty template) |
 | `go` | Go development | Go, air, golangci-lint, go-migrate, gosec, sqlc, templ |
 | `js` | JavaScript/TypeScript | Bun, pnpm |
-| `python` | Python development | Python3, poetry |
+| `python` | Python development | Python3 |
+| `rust` | Rust development | rust-analyzer, cargo-watch, openssl, pkg-config |
 
 ### Using Templates
 
@@ -83,9 +84,20 @@ Provides JS/TS runtime and package manager:
 
 #### Python Development
 
-Provides Python environment with packaging:
+Provides Python interpreter:
 - `python3` - Python 3 interpreter
-- `poetry` - Python dependency management and packaging tool
+
+Note: Dependency management handled via `uv` (in common packages).
+
+#### Rust Development
+
+Provides Rust tooling complements:
+- `rust-analyzer` - LSP server for code completion and diagnostics
+- `cargo-watch` - Watch for file changes and compile automatically
+- `openssl` - Cryptography library (common dependency)
+- `pkg-config` - Build tool for C library dependencies
+
+Note: The Rust toolchain (cargo, rustc, clippy, rustfmt) is managed via `rustup` in common packages.
 
 #### Default Template
 
@@ -125,12 +137,13 @@ Common tools managed by `nix/common/home-manager.nix`:
 **macOS only:**
 - `git` - Version control system
 - `gnupg` - GNU Privacy Guard
+- `go` - Go programming language
 
 **NixOS only:**
 - `brightnessctl`, `cliphist`, `fuzzel`, `hypridle`, `hyprlock`, `hyprpaper`, `hyprshot`, `libnotify`, `swaynotificationcenter`, `waybar`, `wl-clipboard`, `wlogout`, `wlsunset` - Wayland/Hyprland tools
 - `go` - Go programming language
 - `binutils`, `gcc`, `gnumake`, `libffi`, `openssl`, `zlib` - Build tools
-- `claude-code`, `ollama`, `opencode`, `stow`, `wget` - Additional utilities
+- `ollama`, `opencode`, `wget` - Additional utilities
 - `brave`, `nerd-fonts.jetbrains-mono`, `alacritty` - Apps and fonts
 
 ### Dotfile Symlinks

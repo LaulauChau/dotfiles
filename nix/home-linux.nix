@@ -33,10 +33,8 @@
     openssl
     zlib
 
-    claude-code
     ollama
     opencode
-    stow
     wget
   ];
 

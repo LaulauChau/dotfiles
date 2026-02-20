@@ -1,5 +1,5 @@
 {
-  description = "Python dev environment";
+  description = "Rust dev environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -7,18 +7,22 @@
   };
 
   outputs = { nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+    flake-utils.lib.eachDefaultSystem (system =>
       let
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
-            python3
+            rust-analyzer
+            cargo-watch
+            openssl
+            pkg-config
           ];
 
           shellHook = ''
-            echo "Python dev environment loaded"
+            echo "Rust dev environment loaded"
+            echo "Note: clippy, rustfmt, and cargo are managed by rustup toolchain"
           '';
         };
       }
