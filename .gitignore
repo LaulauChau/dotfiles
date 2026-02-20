@@ -1,3 +1,4 @@
 .config/go
 .config/tmux/plugins/
 .DS_Store
+.grepai/

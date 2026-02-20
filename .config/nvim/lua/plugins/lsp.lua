@@ -16,7 +16,6 @@ return {
 				"goimports",
 
 				-- Linters
-				"eslint_d",
 				"stylelint",
 				"golangci-lint",
 				"yamllint",

@@ -16,6 +16,7 @@ return {
 
       keymap = {
         preset = "super-tab",
+        ['<M-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       },
 
       signature = { enabled = true, window = { border = "single" } },

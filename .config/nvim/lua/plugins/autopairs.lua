@@ -1,12 +1,21 @@
 return {
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {},
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		event = "InsertEnter",
-		opts = {},
-	},
+  {
+    "saghen/blink.pairs",
+    version = "*",
+    dependencies = "saghen/blink.download",
+    opts = {
+      mappings = { enabled = true },
+      highlights = { enabled = true },
+    },
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    opts = {
+      opts = {
+        enable_close = true,
+        enable_rename = true,
+        enable_close_on_slash = true,
+      },
+    },
+  },
 }
