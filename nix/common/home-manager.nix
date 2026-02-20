@@ -6,23 +6,14 @@ let
 
   configs = {
     alacritty = "alacritty";
-    fuzzel = "fuzzel";
-    hypr = "hypr";
     nvim = "nvim";
     oh-my-posh = "oh-my-posh";
-    swaync = "swaync";
     tmux = "tmux";
-    waybar = "waybar";
-    wlogout = "wlogout";
   };
 in
-
 {
-  home = {
-    username = "lachau";
-    homeDirectory = "/home/lachau";
-    stateVersion = "25.11";
-  };
+  home.username = "lachau";
+  home.stateVersion = "26.05";
   programs.home-manager.enable = true;
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -45,24 +36,6 @@ in
   };
 
   home.packages = with pkgs; [
-    brightnessctl
-    cliphist
-    fuzzel
-    hypridle
-    hyprlock
-    hyprpaper
-    hyprshot
-    libnotify
-    swaynotificationcenter
-    waybar
-    wl-clipboard
-    wlogout
-    wlsunset
-
-    brave
-    nerd-fonts.jetbrains-mono
-
-    alacritty
     bat
     eza
     fd
@@ -77,21 +50,9 @@ in
     neovim
 
     fnm
-    go
     rustup
     uv
 
-    binutils
-    gcc
-    gnumake
-    libffi
-    openssl
-    zlib
-
-    claude-code
-    ollama
-    opencode
-    stow
-    wget
+    direnv
   ];
 }
