@@ -1,29 +1,28 @@
 return {
   {
-    "stevearc/conform.nvim",
-    cmd = { "ConformInfo" },
-    event = { "BufWritePre" },
+    'stevearc/conform.nvim',
+    cmd = { 'ConformInfo' },
+    event = { 'BufWritePre' },
     opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        go = { 'gofmt', 'goimports' },
+        javascript = { 'prettierd' },
+        typescript = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
+        json = { 'prettierd' },
+        jsonc = { 'prettierd' },
+        css = { 'prettierd' },
+        html = { 'prettierd' },
+        markdown = { 'prettierd' },
+        yaml = { 'prettierd' },
+      },
       format_on_save = {
-        lsp_fallback = true,
+        lsp_format = 'fallback',
         timeout_ms = 500,
       },
-      formatters_by_ft = {
-        -- Web Dev
-        javascript = { "prettierd" },
-        typescript = { "prettierd" },
-        javascriptreact = { "prettierd" },
-        typescriptreact = { "prettierd" },
-        html = { "prettierd" },
-        css = { "prettierd" },
-        json = { "prettierd" },
-        jsonc = { "prettierd" },
-
-        -- Infrastructure
-        go = { "goimports", "gofmt" },
-        yaml = { "prettierd" },
-        yml = { "prettierd" },
-      },
+      notify_on_error = false,
     },
   },
 }

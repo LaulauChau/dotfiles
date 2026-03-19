@@ -1,34 +1,58 @@
 return {
   {
-    "rose-pine/neovim",
-    config = function()
-      vim.cmd("colorscheme rose-pine")
-
-      vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    end,
-    name = "rose-pine",
+    'catppuccin/nvim',
+    config = function() vim.cmd.colorscheme 'catppuccin-mocha' end,
+    name = 'catppuccin',
+    opts = {
+      flavour = 'mocha',
+    },
     priority = 1000,
   },
 
   {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "VeryLazy",
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    event = 'VeryLazy',
     opts = {
       options = {
+        component_separators = '',
         globalstatus = true,
-        component_separators = "",
-        section_separators = "",
-        theme = "rose-pine",
+        section_separators = '',
+        theme = 'catppuccin-mocha',
       },
       sections = {
-        lualine_b = { "branch" },
-        lualine_c = { { "filename", path = 1 } },
-        lualine_x = { "diff", "diagnostics" },
-        lualine_y = { "filetype" },
+        lualine_b = { 'branch' },
+        lualine_c = { { 'filename', path = 1 } },
+        lualine_x = { 'diff', 'diagnostics' },
+        lualine_y = { 'filetype' },
       },
     },
   },
 
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {
+      icons = { mappings = vim.g.have_nerd_font },
+      spec = {
+        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { 'gr', group = 'LSP Actions', mode = 'n' },
+      },
+    },
+  },
+
+  {
+    'lewis6991/gitsigns.nvim',
+    opts = {
+      signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+      },
+    },
+  },
 }

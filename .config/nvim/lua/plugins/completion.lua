@@ -1,30 +1,33 @@
 return {
   {
-    "saghen/blink.cmp",
+    'saghen/blink.cmp',
     dependencies = {
-      "rafamadriz/friendly-snippets",
+      {
+        'L3MON4D3/LuaSnip',
+        version = '2.*',
+        build = (function()
+          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then return end
+          return 'make install_jsregexp'
+        end)(),
+        opts = {},
+      },
     },
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
-      appearance = {
-        nerd_font_variant = "mono",
-        use_nvim_cmp_as_default = true,
+      appearance = { nerd_font_variant = 'mono' },
+      completion = {
+        documentation = { auto_show = false, auto_show_delay_ms = 500 },
       },
-
-      fuzzy = {
-        implementation = "lua",
-      },
-
-      keymap = {
-        preset = "super-tab",
-        ['<M-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      },
-
-      signature = { enabled = true, window = { border = "single" } },
-
+      fuzzy = { implementation = 'lua' },
+      keymap = { preset = 'default' },
+      signature = { enabled = true },
+      snippets = { preset = 'luasnip' },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { 'lsp', 'path', 'snippets' },
       },
     },
-    version = "1.*"
+    event = 'VimEnter',
+    version = '1.*',
   },
 }

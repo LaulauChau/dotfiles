@@ -2,15 +2,18 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.showmode = false
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 10
+vim.g.have_nerd_font = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- --- SEARCH ---
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.inccommand = 'split'
 
 -- --- INDENTATION & FORMATTING ---
 vim.opt.tabstop = 2
@@ -24,10 +27,11 @@ vim.opt.breakindent = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 
 -- --- SYSTEM & BEHAVIOR ---
-vim.opt.mouse = "a"
-vim.opt.clipboard = "unnamedplus"
+vim.opt.mouse = 'a'
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
+vim.opt.confirm = true
