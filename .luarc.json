@@ -1,0 +1,9 @@
+{
+  "runtime.version": "LuaJIT",
+  "workspace.checkThirdParty": false,
+  "workspace.ignoreDir": [
+    ".git",
+    ".local"
+  ],
+  "diagnostics.globals": ["vim"]
+}
